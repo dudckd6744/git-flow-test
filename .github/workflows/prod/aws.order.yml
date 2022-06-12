@@ -29,6 +29,7 @@ on:
       - "main"
     paths: 
       - "apps/order/**"
+      - ".github/workflows/prod/aws.order.yml"
 
 name: "Deploy Production order"
 
