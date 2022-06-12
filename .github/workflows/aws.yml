@@ -26,9 +26,9 @@
 on:
   push:
     paths: 
-      - "apps/order/**"
+      - "apps/{{ROUTE}}/**"
 
-name: "Deploy Production order"
+name: "Deploy Production {{ROUTE}}"
 
 jobs:
   deploy:
@@ -45,7 +45,7 @@ jobs:
           # Build a docker container and
           # push it to ECR so that it can
           # be deployed to ECS.
-          docker build -t test -f Dockerfile.order .
+          docker build -t test -f Dockerfile.{{ROUTE}} .
 
       - name: Fill in the new image ID in the Amazon ECS task definition
         id: task-def
