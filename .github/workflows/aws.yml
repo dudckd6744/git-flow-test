@@ -27,16 +27,31 @@ on:
   push:
     branches:
       - "main"
-    paths: 
-      - "apps/order/**"
 
 name: "Deploy Production order"
 
 jobs:
-  deploy:
-    name: Deploy
+
+  check:
+    outputs:
+      status: ${{ steps.check_pr_labels.outputs.result }}
     runs-on: ubuntu-latest
 
+    steps:
+      - name: Check PR labels action step
+        id: check_pr_labels
+        uses: shioyang/check-pr-labels-on-push-action@v1.0.3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          labels: '["order"]'
+      - name: See result
+        run: echo "${{ steps.check_pr_labels.outputs.result}}"
+
+  deploy:
+    name: Deploy
+    needs: check
+    if: needs.check.outputs.status == 'false'
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -47,7 +62,7 @@ jobs:
           # Build a docker container and
           # push it to ECR so that it can
           # be deployed to ECS.
-          docker build -t test -f Dockerfile.order .
+          docker build -t test -f Dockerfile.{{???}} .
 
       - name: Fill in the new image ID in the Amazon ECS task definition
         id: task-def
