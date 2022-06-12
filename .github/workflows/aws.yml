@@ -25,6 +25,8 @@
 
 on:
   push:
+    branches:
+      - "main"
     paths: 
       - "apps/{{ROUTE}}/**"
 
