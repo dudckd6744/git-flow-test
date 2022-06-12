@@ -50,7 +50,7 @@ jobs:
   deploy:
     name: Deploy
     needs: check
-    if: needs.check.outputs.status == 'false'
+    if: needs.check.outputs.status == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
