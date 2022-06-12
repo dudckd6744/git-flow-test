@@ -26,7 +26,7 @@
 on:
   push:
     paths: 
-      - "apps/order/**"
+      - "apps/**"
 
 name: "Deploy Production order"
 
